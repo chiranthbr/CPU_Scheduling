@@ -1,3 +1,0 @@
-/home/chiru/Stuffs/Projects/cpuSchedulingVisualization/build/CMakeFiles/cpu_scheduling.dir
-/home/chiru/Stuffs/Projects/cpuSchedulingVisualization/build/CMakeFiles/edit_cache.dir
-/home/chiru/Stuffs/Projects/cpuSchedulingVisualization/build/CMakeFiles/rebuild_cache.dir
