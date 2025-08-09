@@ -1,8 +1,5 @@
-#include <iostream>
+#include "display.hpp"
 
-#include "src/display.hpp"
-
-using namespace std;
 int main(int argc, char* argv[]) {
 
    initscr();
@@ -16,7 +13,10 @@ int main(int argc, char* argv[]) {
    
    vector<string> visualizations = {
       "Round Robin (RR)",
-      "First come first serve (FCFS)"
+      "First come first serve (FCFS)",
+      "Shortest job first",
+      "a",
+      "b"
    };
 
    int numberOfVisualizations = visualizations.size();
@@ -25,10 +25,11 @@ int main(int argc, char* argv[]) {
 
    box(menuWindow, 0, 0);
 
+
+   displayMenu(menuWindow, numberOfVisualizations, visualizations);
    wrefresh(menuWindow);
    keypad(menuWindow, true);  // Enables user to give functional keys such as arrow keys!!
 
-   displayMenu(menuWindow, numberOfVisualizations, visualizations);
    getch();
    delwin(menuWindow);
 
@@ -36,3 +37,9 @@ int main(int argc, char* argv[]) {
    
    return 0;
 }
+
+
+
+
+
+

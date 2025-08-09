@@ -1,5 +1,14 @@
-#include <string>
-#include <vector>
 #include "curses.h"
+#include "vector"
+#include "string"
 
-void displayMenu(WINDOW *window, int lines, std::vector<std::string> items);
+using namespace std;
+
+void displayMenu(WINDOW *window, int lines, vector<string> items);
+
+
+
+
+
+
+
