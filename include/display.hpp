@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void displayMenu(WINDOW *window, int lines, vector<string> items);
+int displayMenu(WINDOW *window, int lines, vector<string> items);
 
 
 

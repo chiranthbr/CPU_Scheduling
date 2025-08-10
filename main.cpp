@@ -1,8 +1,12 @@
 #include "display.hpp"
+#include <curses.h>
+#include <iostream>
+#include <string>
 
 int main(int argc, char* argv[]) {
 
    initscr();
+   curs_set(0);
    noecho();
    cbreak();
 
@@ -26,9 +30,12 @@ int main(int argc, char* argv[]) {
    box(menuWindow, 0, 0);
 
 
-   displayMenu(menuWindow, numberOfVisualizations, visualizations);
    wrefresh(menuWindow);
    keypad(menuWindow, true);  // Enables user to give functional keys such as arrow keys!!
+   
+   int algorithm = displayMenu(menuWindow, numberOfVisualizations, visualizations);
+
+   mvwprintw(stdscr, 2, 1, to_string(algorithm).c_str());
 
    getch();
    delwin(menuWindow);
