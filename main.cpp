@@ -1,6 +1,5 @@
 #include "display.hpp"
 #include <curses.h>
-#include <iostream>
 #include <string>
 
 int main(int argc, char* argv[]) {
@@ -19,8 +18,6 @@ int main(int argc, char* argv[]) {
       "Round Robin (RR)",
       "First come first serve (FCFS)",
       "Shortest job first",
-      "a",
-      "b"
    };
 
    int numberOfVisualizations = visualizations.size();
@@ -33,12 +30,18 @@ int main(int argc, char* argv[]) {
    wrefresh(menuWindow);
    keypad(menuWindow, true);  // Enables user to give functional keys such as arrow keys!!
    
-   int algorithm = displayMenu(menuWindow, numberOfVisualizations, visualizations);
+   int choose = displayMenu(menuWindow, numberOfVisualizations, visualizations);
 
-   mvwprintw(stdscr, 2, 1, to_string(algorithm).c_str());
+   std::string algorithm = visualizations[choose];
 
-   getch();
    delwin(menuWindow);
+
+   clear(); // clearing std scr (cpu scheduling) 
+   mvprintw(0, 1, "%s", algorithm.c_str());
+
+   int numberOfProcess;
+   getNumberOfProcesses(&numberOfProcess, 1);
+   clear(); // clearing process input
 
    endwin();
    

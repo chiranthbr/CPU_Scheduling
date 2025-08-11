@@ -1,4 +1,5 @@
 #include "display.hpp"
+#include <cstdlib>
 #include <curses.h>
 #include <regex>
 
@@ -18,9 +19,13 @@ int displayMenu(WINDOW *window, int lines, vector<string> items) {
 
       switch (choice) {
          case KEY_UP:
+         case 107:
+         case KEY_LEFT:
             highlight = ((highlight - 1) < 0)? 0 : highlight - 1;
             break;
          case KEY_DOWN:
+         case 106:
+         case KEY_RIGHT:
             highlight++;
             if(highlight == max + 1)
                highlight = max;
@@ -35,5 +40,30 @@ int displayMenu(WINDOW *window, int lines, vector<string> items) {
    return highlight;
 }
 
+void getNumberOfProcesses(int* number, int chance) {
+   echo();
+   curs_set(1);
+   if(chance  == 1) {
+      mvprintw(2, 1, "Enter number of Processes bw (1 and 20): ");
+      refresh();
 
+   }
+   else {
+      move(2, 0);
+      clrtoeol();
+      mvprintw(2, 1, "Please enter bw 1 and 20 only integer: ");
+      refresh();
+   }
+
+   char numProcess[3];
+   getstr(numProcess);
+
+   if(atoi(numProcess) == 0 || atoi(numProcess) < 1 || atoi(numProcess) > 20) {
+      getNumberOfProcesses(number, ++chance);
+   } else {
+      *number = atoi(numProcess);
+   }
+   curs_set(0);
+   return;
+}
 

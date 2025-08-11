@@ -6,6 +6,8 @@ using namespace std;
 
 int displayMenu(WINDOW *window, int lines, vector<string> items);
 
+void getNumberOfProcesses(int* number, int chance);
+
 
 
 
