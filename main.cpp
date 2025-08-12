@@ -42,6 +42,16 @@ int main(int argc, char* argv[]) {
    int numberOfProcess;
    getNumberOfProcesses(&numberOfProcess, 1);
    clear(); // clearing process input
+   mvprintw(0, 1, "%s", algorithm.c_str());
+   refresh();
+
+   WINDOW *processProgress = newwin(ymax - 6, (int)(xmax / 2) + 4, 2, (int)(xmax / 2) - 4);
+   wrefresh(processProgress);
+
+   displayProcesses(processProgress, numberOfProcess);
+
+   getch();
+   delwin(processProgress);    
 
    endwin();
    

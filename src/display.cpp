@@ -1,7 +1,7 @@
 #include "display.hpp"
 #include <cstdlib>
 #include <curses.h>
-#include <regex>
+#include <string>
 
 int displayMenu(WINDOW *window, int lines, vector<string> items) {
    int highlight = 0;
@@ -44,21 +44,21 @@ void getNumberOfProcesses(int* number, int chance) {
    echo();
    curs_set(1);
    if(chance  == 1) {
-      mvprintw(2, 1, "Enter number of Processes bw (1 and 20): ");
+      mvprintw(2, 1, "Enter number of Processes bw (1 and 15): ");
       refresh();
 
    }
    else {
       move(2, 0);
       clrtoeol();
-      mvprintw(2, 1, "Please enter bw 1 and 20 only integer: ");
+      mvprintw(2, 1, "Please enter bw 1 and 15 only integer: ");
       refresh();
    }
 
    char numProcess[3];
    getstr(numProcess);
 
-   if(atoi(numProcess) == 0 || atoi(numProcess) < 1 || atoi(numProcess) > 20) {
+   if(atoi(numProcess) == 0 || atoi(numProcess) < 1 || atoi(numProcess) > 15) {
       getNumberOfProcesses(number, ++chance);
    } else {
       *number = atoi(numProcess);
@@ -66,4 +66,28 @@ void getNumberOfProcesses(int* number, int chance) {
    curs_set(0);
    return;
 }
+
+void displayProcesses(WINDOW *process, int numberOfProcess) {
+   int print = 1;
+   std::string loading = "  --------------------";
+
+   for(int i = 0; i < numberOfProcess; i++) {
+      mvwprintw(process, print, 1, (to_string(i) + loading).c_str());
+      print += 2;
+   }
+   wrefresh(process);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 

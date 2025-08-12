@@ -8,7 +8,7 @@ int displayMenu(WINDOW *window, int lines, vector<string> items);
 
 void getNumberOfProcesses(int* number, int chance);
 
-
+void displayProcesses(WINDOW *process, int numberOfProcess);
 
 
 
