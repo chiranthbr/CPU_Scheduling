@@ -1,0 +1,23 @@
+#include "processGenerator.hpp"
+#include <cstdlib>
+#include <ctime>
+
+std::vector<Process*> generateProcess(int count, int maxArrival, int maxBurst, std::queue<Process*> &processesQueue) {
+   std::srand(std::time(nullptr));
+   std::vector<Process*> processes;
+
+   for(int i = 0; i < count; i++) {
+      int pid = 1000 + std::rand() % 9000; // 1000 - 9999
+      int arrival = std::rand() % (maxArrival + 1);
+      int burst = 1 + std::rand() % maxBurst;
+      Process *newProcess = new Process(pid, arrival, burst);
+      processes.push_back(newProcess);
+      processesQueue.push(newProcess);
+   }
+
+   return processes;
+}
+
+
+
+

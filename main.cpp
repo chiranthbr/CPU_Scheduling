@@ -1,7 +1,11 @@
 #include "display.hpp"
+#include "processGenerator.hpp"
 #include <cstdio>
 #include <curses.h>
+#include "iostream"
+#include <queue>
 #include <string>
+#include <vector>
 
 int main(int argc, char* argv[]) {
 
@@ -52,10 +56,15 @@ int main(int argc, char* argv[]) {
    refresh();
    attroff(A_UNDERLINE);
 
+   queue<Process*> processesQueue;
+
+   std::vector<Process*> processes;
+   processes = generateProcess(numberOfProcess, 16, 20, processesQueue);
+
    WINDOW *processProgress = newwin(ymax - 6, (int)(xmax / 2) + 4, 2, (int)(xmax / 2) - 4);
    wrefresh(processProgress);
 
-   displayProcesses(processProgress, numberOfProcess);
+   displayProcesses(processProgress, processes);
 
    delwin(processProgress);    
 
@@ -69,10 +78,13 @@ int main(int argc, char* argv[]) {
    getch();
 
    endwin();
+
+   for(auto p: processes) delete p;
+
+   cout << processesQueue.empty() << endl;
    
    return 0;
 }
-
 
 
 

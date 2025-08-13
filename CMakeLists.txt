@@ -9,6 +9,8 @@ include_directories(${CURSES_INCLUDE_DIR})
 add_executable(cpu_scheduling
     main.cpp
     src/display.cpp
+    src/process.cpp
+    src/processGenerator.cpp
 )
 
 target_link_libraries(cpu_scheduling ${CURSES_LIBRARIES})

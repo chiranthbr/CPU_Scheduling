@@ -1,8 +1,10 @@
 #include "display.hpp"
+#include "processGenerator.hpp"
 #include <cstdlib>
 #include <curses.h>
 #include <queue>
 #include <string>
+#include <vector>
 
 int displayMenu(WINDOW *window, int lines, vector<string> items) {
    int highlight = 0;
@@ -68,12 +70,12 @@ void getNumberOfProcesses(int* number, int chance) {
    return;
 }
 
-void displayProcesses(WINDOW *process, int numberOfProcess) {
+void displayProcesses(WINDOW *process, vector<Process*> processes) {
    int print = 1;
    std::string loading = "  --------------------";
 
-   for(int i = 0; i < numberOfProcess; i++) {
-      mvwprintw(process, print, 1, ("P" + to_string(i) + loading).c_str());
+   for(int i = 0; i < processes.size(); i++) {
+      mvwprintw(process, print, 1, ("P" + to_string(processes[i] -> pid) + loading).c_str());
       print += 2;
    }
    wrefresh(process);
