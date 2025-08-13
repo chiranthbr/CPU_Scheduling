@@ -10,7 +10,9 @@ void getNumberOfProcesses(int* number, int chance);
 
 void displayProcesses(WINDOW *process, int numberOfProcess);
 
+void displayQueue(WINDOW * window, int capacity);
 
+void displayCPUstats(WINDOW *cpuWindow, int processNumber);
 
 
 

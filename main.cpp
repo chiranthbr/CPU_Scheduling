@@ -1,4 +1,5 @@
 #include "display.hpp"
+#include <cstdio>
 #include <curses.h>
 #include <string>
 
@@ -11,7 +12,9 @@ int main(int argc, char* argv[]) {
 
    int ymax, xmax;
    getmaxyx(stdscr, ymax, xmax);
+   attron(A_UNDERLINE);
    printw("CPU SCHEDULING VISUALIZATION");
+   attroff(A_UNDERLINE);
    refresh();
    
    vector<string> visualizations = {
@@ -37,21 +40,33 @@ int main(int argc, char* argv[]) {
    delwin(menuWindow);
 
    clear(); // clearing std scr (cpu scheduling) 
+   attron(A_UNDERLINE);
    mvprintw(0, 1, "%s", algorithm.c_str());
+   attroff(A_UNDERLINE);
 
    int numberOfProcess;
    getNumberOfProcesses(&numberOfProcess, 1);
    clear(); // clearing process input
+   attron(A_UNDERLINE);
    mvprintw(0, 1, "%s", algorithm.c_str());
    refresh();
+   attroff(A_UNDERLINE);
 
    WINDOW *processProgress = newwin(ymax - 6, (int)(xmax / 2) + 4, 2, (int)(xmax / 2) - 4);
    wrefresh(processProgress);
 
    displayProcesses(processProgress, numberOfProcess);
 
-   getch();
    delwin(processProgress);    
+
+   WINDOW *qWindow = newwin(9, (int)(xmax / 2) - 6, (int)(ymax / 4) * 3, 1);
+   box(qWindow, 0, 0);
+
+   WINDOW *cpuWindow = newwin(6, (xmax / 2) - 6 , (int)(ymax / 4), 1);
+   displayCPUstats(cpuWindow, 3);
+   wrefresh(qWindow);
+   wrefresh(cpuWindow);
+   getch();
 
    endwin();
    

@@ -1,6 +1,7 @@
 #include "display.hpp"
 #include <cstdlib>
 #include <curses.h>
+#include <queue>
 #include <string>
 
 int displayMenu(WINDOW *window, int lines, vector<string> items) {
@@ -72,15 +73,19 @@ void displayProcesses(WINDOW *process, int numberOfProcess) {
    std::string loading = "  --------------------";
 
    for(int i = 0; i < numberOfProcess; i++) {
-      mvwprintw(process, print, 1, (to_string(i) + loading).c_str());
+      mvwprintw(process, print, 1, ("P" + to_string(i) + loading).c_str());
       print += 2;
    }
    wrefresh(process);
 }
 
+void displayQueue(WINDOW *qWindow, int capacity) {
+   
+}
 
-
-
+void displayCPUstats(WINDOW *cpuWindow, int processNumber) {
+   mvwprintw(cpuWindow, 1, 1, ("In CPU:  P" + to_string(processNumber)).c_str());
+}
 
 
 
