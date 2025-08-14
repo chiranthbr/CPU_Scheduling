@@ -5,3 +5,4 @@ void Process::changeBurstAndWaitingTime(int btime, int wtime) {
    this -> waitingTime += (wtime - this -> waitingTime);
    return;
 }
+

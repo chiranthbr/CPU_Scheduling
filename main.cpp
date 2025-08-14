@@ -1,11 +1,16 @@
 #include "display.hpp"
 #include "processGenerator.hpp"
+#include <algorithm>
 #include <cstdio>
 #include <curses.h>
-#include "iostream"
+#include <iostream>
 #include <queue>
 #include <string>
 #include <vector>
+
+bool comparator(const Process *a, const Process *b) {
+   return a->arrivalTime < b->arrivalTime;
+}
 
 int main(int argc, char* argv[]) {
 
@@ -59,7 +64,9 @@ int main(int argc, char* argv[]) {
    queue<Process*> processesQueue;
 
    std::vector<Process*> processes;
-   processes = generateProcess(numberOfProcess, 16, 20, processesQueue);
+   processes = generateProcess(numberOfProcess, 16, 20);
+   std::sort(processes.begin(), processes.end(), comparator);
+   addToQueue(processesQueue, processes);
 
    WINDOW *processProgress = newwin(ymax - 6, (int)(xmax / 2) + 4, 2, (int)(xmax / 2) - 4);
    wrefresh(processProgress);
@@ -79,9 +86,8 @@ int main(int argc, char* argv[]) {
 
    endwin();
 
+   for(auto i: processes) cout<< i -> arrivalTime << endl;
    for(auto p: processes) delete p;
-
-   cout << processesQueue.empty() << endl;
    
    return 0;
 }
