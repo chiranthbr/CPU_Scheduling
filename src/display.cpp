@@ -1,8 +1,8 @@
 #include "display.hpp"
 #include "processGenerator.hpp"
+#include "helperFunctions.hpp"
 #include <cstdlib>
 #include <curses.h>
-#include <queue>
 #include <string>
 #include <vector>
 
@@ -72,10 +72,19 @@ void getNumberOfProcesses(int* number, int chance) {
 
 void displayProcesses(WINDOW *process, vector<Process*> processes) {
    int print = 1;
-   std::string loading = "  --------------------";
 
    for(int i = 0; i < processes.size(); i++) {
-      mvwprintw(process, print, 1, ("P" + to_string(processes[i] -> pid) + loading).c_str());
+      std::string loaded ="|";
+      std::string loading = "-";
+      int completed = (int)((processes[i]->completedTime / processes[i] -> burstTime) * 10);
+      int remaining = 10 - completed;
+
+      multiplyString(loaded, completed);
+      multiplyString(loading, remaining);
+
+      std::string progressBar = "P" + to_string(processes[i] -> pid) + "  " + loaded + loading + "  " + to_string(completed * 10) + "%";
+      mvwprintw(process, print, 1, progressBar.c_str());
+      // mvwprintw(process, print, 1, ("P" + to_string(processes[i] -> pid) + loading).c_str());
       print += 2;
    }
    wrefresh(process);
@@ -85,8 +94,8 @@ void displayQueue(WINDOW *qWindow, int capacity) {
    
 }
 
-void displayCPUstats(WINDOW *cpuWindow, int processNumber) {
-   mvwprintw(cpuWindow, 1, 1, ("In CPU:  P" + to_string(processNumber)).c_str());
+void displayCPUstats(WINDOW *cpuWindow, Process* process) {
+   mvwprintw(cpuWindow, 1, 1, ("In CPU:  P" + to_string(process -> pid)).c_str());
 }
 
 

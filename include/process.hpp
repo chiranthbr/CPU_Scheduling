@@ -5,8 +5,9 @@ class Process {
       int arrivalTime;
       int burstTime;
       int waitingTime;
+      int completedTime;
 
-      Process(int pid, int atime, int btime) : pid(pid), arrivalTime(atime), burstTime(btime), waitingTime(0) {}
+      Process(int pid, int atime, int btime);
 
       void changeBurstAndWaitingTime(int btime, int wtime);
 };

@@ -79,14 +79,14 @@ int main(int argc, char* argv[]) {
    box(qWindow, 0, 0);
 
    WINDOW *cpuWindow = newwin(6, (xmax / 2) - 6 , (int)(ymax / 4), 1);
-   displayCPUstats(cpuWindow, 3);
+   displayCPUstats(cpuWindow, processes[0]);
    wrefresh(qWindow);
    wrefresh(cpuWindow);
    getch();
 
    endwin();
-
-   for(auto i: processes) cout<< i -> arrivalTime << endl;
+   
+   for(auto i: processes) cout<< i -> burstTime << endl;
    for(auto p: processes) delete p;
    
    return 0;

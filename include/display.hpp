@@ -16,7 +16,7 @@ void displayProcesses(WINDOW *process, vector<Process*> processes);
 
 void displayQueue(WINDOW * window, int capacity);
 
-void displayCPUstats(WINDOW *cpuWindow, int processNumber);
+void displayCPUstats(WINDOW *cpuWindow, Process* process);
 
 
 
