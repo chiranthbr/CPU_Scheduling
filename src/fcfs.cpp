@@ -1,19 +1,30 @@
 #include "fcfs.hpp"
 #include "processGenerator.hpp"
 
-void startScheduling(WINDOW *cpuWindow, WINDOW *queueWindow, WINDOW *processWindow, std::queue<Process *> &processesQueue) {
+void updateValues(std::queue<Process*> &processQueue) {
+   Process* processInCPU = processQueue.front();
+   processQueue.pop();
 
-   Process *processInCPU = processesQueue.front();
-   processesQueue.pop();
+   int currentTime = processInCPU -> arrivalTime;
 
-   int currTime = processInCPU -> arrivalTime;
+   while (!processQueue.empty()) {
 
-   //do {
-   //   
-   //   
+      currentTime += processInCPU -> burstTime;
 
-   //}while ();
-}
+      Process* tempProcess = processQueue.front();
+      processQueue.pop();
+
+      if(tempProcess -> arrivalTime < currentTime) {
+         tempProcess -> waitingTime = (currentTime - tempProcess -> arrivalTime);
+         processInCPU = tempProcess;
+      } else {
+         currentTime = tempProcess -> arrivalTime;
+         processInCPU = tempProcess;
+      }
+   }
+}   
+   
+
 
 
 

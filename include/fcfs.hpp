@@ -4,4 +4,7 @@
 #include <curses.h>
 #include <queue>
 
-void startScheduling(WINDOW *cpuWindow, WINDOW *queueWindow, WINDOW *processWindow, std::queue<Process*> &processesQueue);
+void updateVisuals(WINDOW *cpuWindow, WINDOW *queueWindow, WINDOW *processWindow, std::queue<Process*> &processesQueue);
+
+void updateValues(std::queue<Process*> &processQueue);
+void updateWindowsAndRefresh();

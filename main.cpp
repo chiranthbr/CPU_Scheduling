@@ -1,4 +1,5 @@
 #include "display.hpp"
+#include "fcfs.hpp"
 #include "processGenerator.hpp"
 #include <algorithm>
 #include <cstdio>
@@ -86,7 +87,12 @@ int main(int argc, char* argv[]) {
 
    endwin();
    
-   for(auto i: processes) cout<< i -> burstTime << endl;
+   updateValues(processesQueue);
+
+   //cout << "Arrival, Burst, Waiting" << endl;
+   //for(auto i: processes) {
+   //   cout << i->arrivalTime << " " << i->burstTime << " " << i->waitingTime << endl;
+   //}
    for(auto p: processes) delete p;
    
    return 0;
