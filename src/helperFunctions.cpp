@@ -1,15 +1,12 @@
 #include "helperFunctions.hpp"
 
-void multiplyString(std::string& s, int& n) {
-   if(n == 0) {
-      s = "";
-      return;
-   }
-   std::string temp = s;
-   for(int i = 0; i < n - 1; i++) {
+void multiplyString(std::string &s, int n, int num) {
+   std::string temp;
+   if(num == 1) temp = "|";
+   else temp = "-";
+
+   for(int i = 0; i < n; i++) {
       s += temp;
    }
 }
-
-
 

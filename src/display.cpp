@@ -3,6 +3,7 @@
 #include "helperFunctions.hpp"
 #include <cstdlib>
 #include <curses.h>
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -74,16 +75,16 @@ void displayProcesses(WINDOW *process, vector<Process*> processes) {
    int print = 1;
 
    for(int i = 0; i < processes.size(); i++) {
-      std::string loaded ="|";
-      std::string loading = "-";
-      int completed = (int)((processes[i]->completedTime / processes[i] -> burstTime) * 10);
+      std::string loaded ="";
+      std::string loading = "";
+      int completed = (int)(((float)processes[i]->completedTime / processes[i]->burstTime) * 10);
       int remaining = 10 - completed;
 
-      multiplyString(loaded, completed);
-      multiplyString(loading, remaining);
+      multiplyString(loaded, completed, 1);
+      multiplyString(loading, remaining, 2);
 
-      std::string progressBar = "P" + to_string(processes[i] -> pid) + "  " + loaded + loading + "  " + to_string(completed * 10) + "%";
-      mvwprintw(process, print, 1, progressBar.c_str());
+      std::string progressBar = std::string("P") + to_string(processes[i] -> pid) + "  " + loaded + loading + "  " + to_string(completed * 10) + "%";
+      mvwprintw(process, print, 1, "%s", progressBar.c_str());
       // mvwprintw(process, print, 1, ("P" + to_string(processes[i] -> pid) + loading).c_str());
       print += 2;
    }

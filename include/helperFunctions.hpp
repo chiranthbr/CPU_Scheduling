@@ -2,4 +2,4 @@
 
 #include <string>
 
-void multiplyString(std::string& s, int& n);
+void multiplyString(std::string &s, int n, int num);

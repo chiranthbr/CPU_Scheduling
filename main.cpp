@@ -74,7 +74,6 @@ int main(int argc, char* argv[]) {
 
    displayProcesses(processProgress, processes);
 
-   delwin(processProgress);    
 
    WINDOW *qWindow = newwin(9, (int)(xmax / 2) - 6, (int)(ymax / 4) * 3, 1);
    box(qWindow, 0, 0);
@@ -84,15 +83,17 @@ int main(int argc, char* argv[]) {
    wrefresh(qWindow);
    wrefresh(cpuWindow);
    getch();
-
-   endwin();
    
-   updateValues(processesQueue);
+   if(choose == 1) updateValues(processesQueue, processes, cpuWindow, processProgress, qWindow);
+   delwin(processProgress);    
+   delwin(qWindow);
+   delwin(cpuWindow);
+   endwin();
 
-   //cout << "Arrival, Burst, Waiting" << endl;
-   //for(auto i: processes) {
-   //   cout << i->arrivalTime << " " << i->burstTime << " " << i->waitingTime << endl;
-   //}
+   cout << "Arrival, Burst, Waiting" << endl;
+   for(auto i: processes) {
+      cout << i->arrivalTime << " " << i->burstTime << " " << i->waitingTime << " " << i->completedTime << endl;
+   }
    for(auto p: processes) delete p;
    
    return 0;
