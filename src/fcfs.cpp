@@ -5,16 +5,18 @@
 #include <thread>
 #include <vector>
 
-void updateValues(std::queue<Process*> &processQueue, std::vector<Process*> processes, WINDOW* cpuWindow, WINDOW* processWindow, WINDOW* queueWindow) {
+void updateValuesForFCFS(std::queue<Process*> &processQueue, std::vector<Process*> processes, WINDOW* cpuWindow, WINDOW* processWindow, WINDOW* queueWindow) {
    Process* processInCPU = processQueue.front();
    processQueue.pop();
 
    int currentTime = processInCPU -> arrivalTime;
-
-   while (!processQueue.empty()) {
-      updateVisuals(processInCPU, processes, cpuWindow, processWindow, queueWindow);
+   std::this_thread::sleep_for(std::chrono::seconds(3));
+   
+   do {
+      updateVisualsForFCFS(processInCPU, processes, cpuWindow, processWindow, queueWindow);
 
       currentTime += processInCPU -> burstTime;
+      processInCPU->completedAt = currentTime;
 
       Process* tempProcess = processQueue.front();
       processQueue.pop();
@@ -26,18 +28,22 @@ void updateValues(std::queue<Process*> &processQueue, std::vector<Process*> proc
          currentTime = tempProcess -> arrivalTime;
          processInCPU = tempProcess;
       }
-      updateVisuals(processInCPU, processes, cpuWindow, processWindow, queueWindow);
-   }
+      if(processQueue.empty()) {
+         tempProcess -> completedAt = currentTime + tempProcess -> burstTime;
+      }
+      updateVisualsForFCFS(processInCPU, processes, cpuWindow, processWindow, queueWindow);
+   } while(!processQueue.empty());
 }   
    
 
-void updateVisuals(Process* processInCPU, vector<Process*> processes, WINDOW* cpuWindow, WINDOW* processWindow, WINDOW* queueWindow) {
+void updateVisualsForFCFS(Process* processInCPU, vector<Process*> processes, WINDOW* cpuWindow, WINDOW* processWindow, WINDOW* queueWindow) {
    displayCPUstats(cpuWindow, processInCPU);
    wrefresh(cpuWindow);
    while (true) {
       processInCPU->completedTime += 2;
       if(processInCPU->completedTime > processInCPU->burstTime) {
          processInCPU -> completedTime = processInCPU -> burstTime;
+         displayProcesses(processWindow, processes);
          return;
       }
       displayProcesses(processWindow, processes);

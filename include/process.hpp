@@ -6,8 +6,7 @@ class Process {
       int burstTime;
       int waitingTime;
       int completedTime;
+      int completedAt;
 
       Process(int pid, int atime, int btime);
-
-      void changeBurstAndWaitingTime(int btime, int wtime);
 };

@@ -82,9 +82,41 @@ int main(int argc, char* argv[]) {
    displayCPUstats(cpuWindow, processes[0]);
    wrefresh(qWindow);
    wrefresh(cpuWindow);
-   getch();
    
-   if(choose == 1) updateValues(processesQueue, processes, cpuWindow, processProgress, qWindow);
+   WINDOW* statsWindow = newwin(ymax, xmax, 0, 0);
+
+   if(choose == 1) {
+      updateValuesForFCFS(processesQueue, processes, cpuWindow, processProgress, qWindow);
+      getch();
+      mvwprintw(statsWindow, 1, 1, std::string("AT  - Arrival TIme\n BT  - Burst TIme\n CT  - Completed Time\n TAT - Turnaround Time (CT - AT)\n WT  - Waiting Time (TAT - BT) ").c_str());
+      
+      mvwprintw(statsWindow, 8, 10, std::string("AT  |  BT  |  CT  |  TAT  |  WT ").c_str());
+
+      int totalTurnaroundTIme;
+      int totalWaitingTIme;
+      int posLine = 9;
+      int posStats = 10;
+
+      for(int i = 0; i < processes.size(); i++) {
+         int tat = processes[i] -> completedAt - processes[i] -> arrivalTime;
+         int wt = tat - processes[i] -> burstTime;
+         std::string allStatsOfaProcess = "";
+         allStatsOfaProcess += to_string(processes[i] -> arrivalTime) + "  |  " +
+            to_string(processes[i] -> burstTime) + "  |  " +
+            to_string(processes[i] -> completedAt) + "  |  " +
+            to_string(tat) + "  |  " +
+            to_string(wt);
+
+         totalWaitingTIme += wt;
+         totalTurnaroundTIme += tat;
+
+         mvwprintw(statsWindow, posStats, 10, allStatsOfaProcess.c_str());
+         posLine += 2;
+         posStats += 2;
+      }
+      wrefresh(statsWindow);
+      getch();
+   }
    delwin(processProgress);    
    delwin(qWindow);
    delwin(cpuWindow);
@@ -98,7 +130,6 @@ int main(int argc, char* argv[]) {
    
    return 0;
 }
-
 
 
 
