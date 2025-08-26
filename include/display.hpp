@@ -18,5 +18,5 @@ void displayQueue(WINDOW * window, int capacity);
 
 void displayCPUstats(WINDOW *cpuWindow, Process* process);
 
-
+void displayStats(WINDOW* statsWindow, vector<Process*> processes);
 

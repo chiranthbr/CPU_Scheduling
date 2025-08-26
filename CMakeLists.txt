@@ -13,6 +13,7 @@ add_executable(cpu_scheduling
     src/processGenerator.cpp
     src/helperFunctions.cpp
     src/fcfs.cpp
+    src/sjf.cpp
 )
 
 target_link_libraries(cpu_scheduling ${CURSES_LIBRARIES})

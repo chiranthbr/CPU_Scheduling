@@ -1,5 +1,6 @@
 #include "display.hpp"
 #include "fcfs.hpp"
+#include "sjf.hpp"
 #include "processGenerator.hpp"
 #include <algorithm>
 #include <cstdio>
@@ -62,60 +63,47 @@ int main(int argc, char* argv[]) {
    refresh();
    attroff(A_UNDERLINE);
 
-   queue<Process*> processesQueue;
-
-   std::vector<Process*> processes;
-   processes = generateProcess(numberOfProcess, 16, 20);
-   std::sort(processes.begin(), processes.end(), comparator);
-   addToQueue(processesQueue, processes);
-
    WINDOW *processProgress = newwin(ymax - 6, (int)(xmax / 2) + 4, 2, (int)(xmax / 2) - 4);
    wrefresh(processProgress);
 
-   displayProcesses(processProgress, processes);
+   queue<Process*> processesQueue;
+
+   std::vector<Process*> processes;
 
 
    WINDOW *qWindow = newwin(9, (int)(xmax / 2) - 6, (int)(ymax / 4) * 3, 1);
    box(qWindow, 0, 0);
 
    WINDOW *cpuWindow = newwin(6, (xmax / 2) - 6 , (int)(ymax / 4), 1);
-   displayCPUstats(cpuWindow, processes[0]);
    wrefresh(qWindow);
    wrefresh(cpuWindow);
    
    WINDOW* statsWindow = newwin(ymax, xmax, 0, 0);
 
    if(choose == 1) {
+      processes = generateProcess(numberOfProcess, 16, 20);
+      std::sort(processes.begin(), processes.end(), comparator);
+      addToQueue(processesQueue, processes);
+      displayProcesses(processProgress, processes);
+
       updateValuesForFCFS(processesQueue, processes, cpuWindow, processProgress, qWindow);
       getch();
-      mvwprintw(statsWindow, 1, 1, std::string("AT  - Arrival TIme\n BT  - Burst TIme\n CT  - Completed Time\n TAT - Turnaround Time (CT - AT)\n WT  - Waiting Time (TAT - BT) ").c_str());
-      
-      mvwprintw(statsWindow, 8, 10, std::string("AT  |  BT  |  CT  |  TAT  |  WT ").c_str());
+      displayStats(statsWindow, processes);
+   } else if(choose == 2) {
+      // Prepare vector first
+      // updateValuesForSJF()
+      // getch()
+      // displayStats()
+      //
+      processes = generateProcess(numberOfProcess, 16, 20);
+      std::sort(processes.begin(), processes.end(), comparator);
+      addToQueue(processesQueue, processes);
+      displayProcesses(processProgress, processes);
+      updateValuesForSJF(processesQueue, processes, cpuWindow, processProgress, qWindow); 
 
-      int totalTurnaroundTIme;
-      int totalWaitingTIme;
-      int posLine = 9;
-      int posStats = 10;
-
-      for(int i = 0; i < processes.size(); i++) {
-         int tat = processes[i] -> completedAt - processes[i] -> arrivalTime;
-         int wt = tat - processes[i] -> burstTime;
-         std::string allStatsOfaProcess = "";
-         allStatsOfaProcess += to_string(processes[i] -> arrivalTime) + "  |  " +
-            to_string(processes[i] -> burstTime) + "  |  " +
-            to_string(processes[i] -> completedAt) + "  |  " +
-            to_string(tat) + "  |  " +
-            to_string(wt);
-
-         totalWaitingTIme += wt;
-         totalTurnaroundTIme += tat;
-
-         mvwprintw(statsWindow, posStats, 10, allStatsOfaProcess.c_str());
-         posLine += 2;
-         posStats += 2;
-      }
-      wrefresh(statsWindow);
       getch();
+      displayStats(statsWindow, processes);
+
    }
    delwin(processProgress);    
    delwin(qWindow);
