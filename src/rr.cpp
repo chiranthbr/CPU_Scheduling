@@ -1,6 +1,10 @@
 #include "rr.hpp"
+#include "display.hpp"
 #include "processGenerator.hpp"
+#include <chrono>
+#include <curses.h>
 #include <queue>
+#include <thread>
 
 void updateValuesForRR(std::queue<Process *> queue, WINDOW *cpuWIndow, WINDOW *processesWindow, WINDOW *queueWindow, std::vector<Process *> processes) {
    int currentTIme = 0;
@@ -32,5 +36,18 @@ void updateValuesForRR(std::queue<Process *> queue, WINDOW *cpuWIndow, WINDOW *p
          }
       } 
       currentTIme++;
+      if(processInCPU != nullptr) updateVisualsForRR(cpuWIndow, processesWindow, queueWindow, processes, processInCPU);
    }
 }
+
+void updateVisualsForRR(WINDOW* cpuWIndow, WINDOW* processesWindow, WINDOW* queueWindow, std::vector<Process*> processes, Process* processInCPU) {
+   displayCPUstats(cpuWIndow, processInCPU);
+   displayProcesses(processesWindow, processes);
+   wrefresh(cpuWIndow);
+   wrefresh(processesWindow);
+
+   std::this_thread::sleep_for(std::chrono::seconds(1));
+}
+
+
+
