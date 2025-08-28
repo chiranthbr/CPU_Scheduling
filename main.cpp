@@ -1,5 +1,6 @@
 #include "display.hpp"
 #include "fcfs.hpp"
+#include "rr.hpp"
 #include "sjf.hpp"
 #include "processGenerator.hpp"
 #include <algorithm>
@@ -94,7 +95,7 @@ int main(int argc, char* argv[]) {
       // updateValuesForSJF()
       // getch()
       // displayStats()
-      //
+
       processes = generateProcess(numberOfProcess, 16, 20);
       std::sort(processes.begin(), processes.end(), comparator);
       addToQueue(processesQueue, processes);
@@ -104,6 +105,21 @@ int main(int argc, char* argv[]) {
       getch();
       displayStats(statsWindow, processes);
 
+   } else if(choose == 0) {
+      // quant time = 0.5s
+      // UpdateValuesForRR()
+      // getch()
+      // displayStats()
+
+      processes = generateProcess(numberOfProcess, 16, 20);
+      std::sort(processes.begin(), processes.end(), comparator);
+      addToQueue(processesQueue, processes);
+      displayProcesses(processProgress, processes);
+
+      updateValuesForRR(processesQueue, cpuWindow, processProgress, qWindow, processes);
+      
+      getch();
+      displayStats(statsWindow, processes);
    }
    delwin(processProgress);    
    delwin(qWindow);

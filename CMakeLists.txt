@@ -14,6 +14,7 @@ add_executable(cpu_scheduling
     src/helperFunctions.cpp
     src/fcfs.cpp
     src/sjf.cpp
+    src/rr.cpp
 )
 
 target_link_libraries(cpu_scheduling ${CURSES_LIBRARIES})
