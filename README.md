@@ -12,7 +12,7 @@ For now, below mentioned algorithms can be visualized:
 
 - Clone repo in a directory
 - cd into the directory
-- `cd build` (for building the project)
+- `mkdir build && cd build` (for building the project)
 - `cmake .. && make`
 - `./cpuScheduling`
 
