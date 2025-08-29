@@ -5,7 +5,7 @@ An interactive in-terminal visualization of scheduling algorithms, with a cool m
 For now, below mentioned algorithms can be visualized:
 - First come First serve (FCFS)
 - Shortest Job First (SJB)
-- Round Robin (RR) (!! Ongoing )
+- Round Robin (RR)
 - (More incoming..)
 
 # Installation guide:
