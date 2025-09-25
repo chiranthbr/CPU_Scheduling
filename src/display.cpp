@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <curses.h>
 #include <iostream>
+#include <queue>
 #include <string>
 #include <vector>
 
@@ -91,8 +92,18 @@ void displayProcesses(WINDOW *process, vector<Process*> processes) {
    wrefresh(process);
 }
 
-void displayQueue(WINDOW *qWindow, int capacity) {
-   
+void displayQueue(WINDOW *qWindow, std::queue<Process*> queuee) {
+   int i = 1;
+   int row = 1;
+   while(!queuee.empty()) {
+      mvwprintw(qWindow, ((i - 1) * 7) + 1, row, (std::string("P") + to_string(queuee.front() -> pid) + std::string("->")).c_str());
+      i++;
+      if(i > 3) {
+         i = 1;
+         row = 2;
+      }
+      queuee.pop();
+   }
 }
 
 void displayCPUstats(WINDOW *cpuWindow, Process* process) {
