@@ -50,6 +50,7 @@ void updateVisualsForFCFS(Process* processInCPU, vector<Process*> processes, WIN
       }
       displayProcesses(processWindow, processes);
       wrefresh(processWindow);
+      wclear(queueWindow);
       displayQueue(queueWindow, queuee);
       wrefresh(queueWindow);
       std::this_thread::sleep_for(std::chrono::seconds(1));

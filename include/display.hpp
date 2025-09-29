@@ -15,7 +15,7 @@ void getNumberOfProcesses(int* number, int chance);
 
 void displayProcesses(WINDOW *process, vector<Process*> processes);
 
-void displayQueue(WINDOW * window, std::queue<Process*> queuee);
+void displayQueue(WINDOW * window, std::queue<Process*> &queuee);
 
 void displayCPUstats(WINDOW *cpuWindow, Process* process);
 

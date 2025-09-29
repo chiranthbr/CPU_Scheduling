@@ -92,17 +92,13 @@ void displayProcesses(WINDOW *process, vector<Process*> processes) {
    wrefresh(process);
 }
 
-void displayQueue(WINDOW *qWindow, std::queue<Process*> queuee) {
+void displayQueue(WINDOW *qWindow, std::queue<Process*> &queuee) {
+   std::queue<Process*> q = queuee;
    int i = 1;
-   int row = 1;
-   while(!queuee.empty()) {
-      mvwprintw(qWindow, ((i - 1) * 7) + 1, row, (std::string("P") + to_string(queuee.front() -> pid) + std::string("->")).c_str());
+   while(!q.empty()) {
+      mvwprintw(qWindow, i, 1, (std::string("P") + to_string(q.front() ->pid) + std::string(" -> ")).c_str());
       i++;
-      if(i > 3) {
-         i = 1;
-         row = 2;
-      }
-      queuee.pop();
+      q.pop();
    }
 }
 
