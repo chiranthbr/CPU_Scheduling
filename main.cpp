@@ -117,7 +117,7 @@ int main(int argc, char* argv[]) {
       displayProcesses(processProgress, processes);
 
       updateValuesForRR(processesQueue, cpuWindow, processProgress, qWindow, processes);
-      
+
       getch();
       displayStats(statsWindow, processes);
    }

@@ -11,6 +11,7 @@ void updateValuesForRR(std::queue<Process *> queue, WINDOW *cpuWIndow, WINDOW *p
    int quantTime = 1;
    std::queue<Process*> readyProcessesQueue;
    Process* processInCPU = nullptr;
+   updateVisualsForRR(cpuWIndow, processesWindow, queueWindow, processes, processInCPU, queue);
 
    while (!queue.empty() || !readyProcessesQueue.empty()) {
 
@@ -36,15 +37,18 @@ void updateValuesForRR(std::queue<Process *> queue, WINDOW *cpuWIndow, WINDOW *p
          }
       } 
       currentTIme++;
-      if(processInCPU != nullptr) updateVisualsForRR(cpuWIndow, processesWindow, queueWindow, processes, processInCPU);
+      if(processInCPU != nullptr) updateVisualsForRR(cpuWIndow, processesWindow, queueWindow, processes, processInCPU, readyProcessesQueue);
    }
 }
 
-void updateVisualsForRR(WINDOW* cpuWIndow, WINDOW* processesWindow, WINDOW* queueWindow, std::vector<Process*> processes, Process* processInCPU) {
+void updateVisualsForRR(WINDOW* cpuWIndow, WINDOW* processesWindow, WINDOW* queueWindow, std::vector<Process*> processes, Process* processInCPU, std::queue<Process*> &queuee) {
    displayCPUstats(cpuWIndow, processInCPU);
    displayProcesses(processesWindow, processes);
    wrefresh(cpuWIndow);
    wrefresh(processesWindow);
+      wclear(queueWindow);
+      displayQueue(queueWindow, queuee);
+      wrefresh(queueWindow);
 
    std::this_thread::sleep_for(std::chrono::seconds(1));
 }

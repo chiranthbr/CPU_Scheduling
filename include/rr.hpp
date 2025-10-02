@@ -7,4 +7,4 @@
 
 void updateValuesForRR(std::queue<Process*> queue, WINDOW* cpuWIndow, WINDOW* processesWindow, WINDOW* queueWindow, std::vector<Process*> processes);
 
-void updateVisualsForRR(WINDOW* cpuWIndow, WINDOW* processesWindow, WINDOW* queueWindow, std::vector<Process*> processes, Process* processInCPU);
+void updateVisualsForRR(WINDOW* cpuWIndow, WINDOW* processesWindow, WINDOW* queueWindow, std::vector<Process*> processes, Process* processInCPU,  std::queue<Process*> &queuee);
